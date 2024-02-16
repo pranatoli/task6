@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require('../config/database');
+const Departament = require('./departament');
 
 const Position = db.define('positions', {
     id: {
@@ -8,17 +9,13 @@ const Position = db.define('positions', {
         primaryKey: true,
         allowNull: false,
     },
-    workerId: {
+    departamentId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-    },
-    startwork: {
-        type: Sequelize.DATE,
-        allowNull: false,
-    },
-    endwork: {
-        type: Sequelize.DATE,
-        allowNull: true,
+        references: {
+            model: Departament,
+            key: 'id',
+        }
     },
     title: {
         type: Sequelize.STRING,

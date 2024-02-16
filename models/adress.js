@@ -28,15 +28,6 @@ const Adress = db.define('adresses', {
         type: Sequelize.INTEGER,
         allowNull: false,
     },
-    workerId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-    },
-    departamentId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-    },
-
 },
     {
         timestamps: false,

@@ -1,5 +1,8 @@
 const Sequelize = require('sequelize');
 const db = require('../config/database');
+const Departament = require('./departament');
+const Position = require('./position');
+const Adress = require('./adress');
 
 const Worker = db.define('workers', {
     id: {
@@ -21,18 +24,34 @@ const Worker = db.define('workers', {
         allowNull: false,
     },
     male: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false,
     },
     positionId: {
         type: Sequelize.INTEGER,
-        allowNull: true,
+        allowNull: false,
+        references: {
+            model: Position,
+            key: 'id',
+        }
     },
     departamentId: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        references: {
+            model: Departament,
+            key: 'id',
+        }
     },
-    dirthdate: {
+    adressId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+            model: Adress,
+            key: 'id'
+        }
+    },
+    birthdate: {
         type: Sequelize.DATE,
         allowNull: false,
     },

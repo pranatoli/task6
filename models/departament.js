@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require('../config/database');
+const Adress = require('./adress');
 
 const Departament = db.define('departaments', {
     id: {
@@ -12,13 +13,13 @@ const Departament = db.define('departaments', {
         type: Sequelize.STRING,
         allowNull: false,
     },
-    workerId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-    },
     adressId: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        references: {
+            model: Adress,
+            key: 'id',
+        }
     },
 
 },
