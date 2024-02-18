@@ -7,7 +7,8 @@ class PositionServices {
         return await Position.findAll();
     }
     async getPositionByID(positionID) {
-        return await Position.findOne({ where: { id: positionID } });
+        const data = await Position.findOne({ where: { id: positionID } });
+        return data === null ? { status: 400, send: "должность не найдена" } : { status: 200, send: data };
     }
     async addPosition(body) {
         return await Position.create(body);

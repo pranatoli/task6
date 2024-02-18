@@ -1,16 +1,16 @@
 require('dotenv').config();
 
-const PositionServices = require('../services/position.services');
+const DepartamentServices = require('../services/departament.services');
 
 const db = require('../config/database');
 const { Worker, Position, Adress, Departament } = require('../models/_models');
 
 
-class PositionControllers {
-    async getPositions(req, res) {
+class DepartamentControllers {
+    async getDepartaments(req, res) {
         try {
-            const positions = await PositionServices.getPositions();
-            res.status(200).send(positions);
+            const departaments = await DepartamentServices.getDepartaments();
+            res.status(200).send(departaments);
         } catch (err) {
             res.status(400).json({
                 err: err.message
@@ -18,10 +18,10 @@ class PositionControllers {
         }
     }
 
-    async getPositionByID(req, res) {
+    async getDepartamentByID(req, res) {
         try {
-            let positionID = req.params.id;
-            const data = await PositionServices.getPositionByID(positionID);
+            let departamentID = req.params.id;
+            const data = await DepartamentServices.getDepartamentByID(departamentID);
             res.status(data.status).send(data.send);
         } catch (err) {
             res.status(400).json({
@@ -30,10 +30,10 @@ class PositionControllers {
         }
     }
 
-    async addPosition(req, res) {
+    async addDepartament(req, res) {
         try {
             let body = req.body;
-            const data = await PositionServices.addPosition(body);
+            const data = await DepartamentServices.addDepartament(body);
             res.status(200).send(data);
         } catch (err) {
             res.status(400).json({
@@ -42,11 +42,11 @@ class PositionControllers {
         }
     }
 
-    async updatePosition(req, res) {
+    async updateDepartament(req, res) {
         try {
             let body = req.body
-            let positionID = req.params.id
-            const data = await PositionServices.updatePosition(body, positionID);
+            let departamentID = req.params.id
+            const data = await DepartamentServices.updateDepartament(body, departamentID);
             console.log(data);
             res.status(200).send(data);
         } catch (err) {
@@ -56,11 +56,11 @@ class PositionControllers {
         }
 
     }
-    async deletePosition(req, res) {
+    async deleteDepartament(req, res) {
         try {
-            let positionID = req.params.id;
-            const data = await PositionServices.deletePosition(positionID);
-            res.status(200).send(data);
+            let departamentID = req.params.id;
+            const data = await DepartamentServices.deleteDepartament(departamentID);
+            res.status(data.status).send(data.send);
         } catch (err) {
             res.status(400).json({
                 err: err.message
@@ -69,4 +69,4 @@ class PositionControllers {
     }
 }
 
-module.exports = new PositionControllers();
+module.exports = new DepartamentControllers();

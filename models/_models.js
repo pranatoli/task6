@@ -20,19 +20,19 @@ const Departament = require('./departament');
 // ------- Associations -------
 
 Position.hasMany(Worker, { foreignKey: 'positionId' });
-Worker.belongsTo(Position, { foreignKey: 'positionId' });
+Worker.belongsTo(Position);
 
-Worker.hasOne(Departament, { foreignKey: 'departamentId' });
-Departament.belongsTo(Worker, { foreignKey: 'departamentId' });
+Departament.hasMany(Worker, { foreignKey: 'departamentId' });
+Worker.belongsTo(Departament);
 
 Worker.hasOne(Adress, { foreignKey: 'adressId' });
-Adress.belongsTo(Worker, { foreignkey: 'adressId' });
+Adress.belongsTo(Worker);
 
-Departament.hasOne(Adress, { foreignkey: 'adressId' });
-Adress.belongsTo(Departament, { foreignKey: 'adressId' });
+Adress.hasOne(Departament, { foreignkey: 'adressId' });
+Departament.belongsTo(Adress);
 
 Departament.hasMany(Position, { foreignKey: 'departamentId' });
-Position.belongsTo(Departament, { foreignKey: 'departamentId' });
+Position.belongsTo(Departament);
 
 module.exports = {
     Position,
