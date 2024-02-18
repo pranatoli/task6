@@ -1,8 +1,7 @@
 let express = require('express');
 const router = express.Router();
 const db = require('../config/database');
-
-// controllers
+const PositionControllers = require('../controllers/position.controllers');
 const { Worker, Position, Adress, Departament } = require('../models/_models');
 
 /**
@@ -21,17 +20,7 @@ const { Worker, Position, Adress, Departament } = require('../models/_models');
  *          400:
  *            description: bad request 
  */
-router.get('/', async (req, res) => {
-    try {
-        const allData = await Position.findAll();
-        res.status(200);
-        res.send(allData);
-    } catch (err) {
-        res.status(400).json({
-            err: err.message
-        })
-    }
-})
+router.get('/', PositionControllers.getPositions)
 
 /**
  * @swagger
@@ -54,18 +43,7 @@ router.get('/', async (req, res) => {
  *          400:
  *            description: bad request 
  */
-router.get('/:id', async (req, res) => {
-    try {
-        let que = req.params.id
-        const data = await Position.findOne({ where: { id: que } })
-        res.status(200);
-        res.send(data);
-    } catch (err) {
-        res.status(400).json({
-            err: err.message
-        })
-    }
-})
+router.get('/:id', PositionControllers.getPositionByID)
 
 /**
  *@swagger
@@ -101,18 +79,7 @@ router.get('/:id', async (req, res) => {
  *                  example: водитель
  *                  description: Position name
  */
-router.post('/', async (req, res) => {
-    try {
-        let body = req.body;
-        const data = await Position.create(body);
-        res.status(200);
-        res.send(data);
-    } catch (err) {
-        res.status(400).json({
-            err: err.message
-        })
-    }
-})
+router.post('/', PositionControllers.addPosition)
 
 /**
  *@swagger
@@ -135,24 +102,7 @@ router.post('/', async (req, res) => {
  *          400:
  *            description: bad request
  */
-router.patch('/:id', async (req, res) => {
-    try {
-        let body = req.body
-        const data = await Position.update(body, {
-            where: {
-                id: req.params.id
-            }
-        })
-        if (data[0] == 1) {
-            const data = await Position.findOne({ where: { id: req.params.id } })
-            res.status(200).send(data);
-        } else res.status(400).send("Position not found");
-    } catch (err) {
-        res.status(400).json({
-            err: err.message
-        })
-    }
-})
+router.patch('/:id', PositionControllers.updatePosition)
 
 /**
  *@swagger
@@ -173,22 +123,6 @@ router.patch('/:id', async (req, res) => {
  *          400:
  *            description: bad request
  */
-router.delete('/:id', async (req, res) => {
-    try {
-        const data = await Position.destroy({
-            where: {
-                id: req.params.id
-            }
-        })
-        console.log(data);
-        if (data == 1) {
-            res.status(200).send("Position is deleted");
-        } else res.status(400).send("Position not found");
-    } catch (err) {
-        res.status(400).json({
-            err: err.message
-        })
-    }
-})
+router.delete('/:id', PositionControllers.deletePosition)
 
 module.exports = router;
