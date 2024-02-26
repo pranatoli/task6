@@ -1,8 +1,17 @@
-let express = require('express');
+const express = require('express');
 const router = express.Router();
-const db = require('../config/database');
 const DepartamentControllers = require('../controllers/departament.controllers');
-const { Worker, Position, Adress, Departament } = require('../models/_models');
+
+const { body, query, param, matchedData, validationResult } = require('express-validator');
+
+const validationBody = [
+    body('name').notEmpty().isString().trim().escape(),
+    body('adressId').notEmpty().isInt(),
+]
+
+const validationParamId = [
+    param('id').notEmpty().isString().withMessage('ID not correct')
+]
 
 /**
  * @swagger
@@ -20,7 +29,7 @@ const { Worker, Position, Adress, Departament } = require('../models/_models');
  *          400:
  *            description: bad request 
  */
-router.get('/', DepartamentControllers.getDepartaments)
+router.get('/', validationBody, DepartamentControllers.getDepartaments)
 
 /**
  * @swagger
@@ -43,7 +52,7 @@ router.get('/', DepartamentControllers.getDepartaments)
  *          400:
  *            description: bad request 
  */
-router.get('/:id', DepartamentControllers.getDepartamentByID)
+router.get('/:id', validationParamId, DepartamentControllers.getDepartamentByID)
 
 /**
  *@swagger
@@ -79,7 +88,7 @@ router.get('/:id', DepartamentControllers.getDepartamentByID)
  *                  example: отделение №5
  *                  description: Departament name
  */
-router.post('/', DepartamentControllers.addDepartament)
+router.post('/', validationBody, DepartamentControllers.addDepartament)
 
 /**
  *@swagger
@@ -102,7 +111,7 @@ router.post('/', DepartamentControllers.addDepartament)
  *          400:
  *            description: bad request
  */
-router.patch('/:id', DepartamentControllers.updateDepartament)
+router.patch('/:id', validationBody, validationParamId, DepartamentControllers.updateDepartament)
 
 /**
  *@swagger
@@ -123,6 +132,6 @@ router.patch('/:id', DepartamentControllers.updateDepartament)
  *          400:
  *            description: bad request
  */
-router.delete('/:id', DepartamentControllers.deleteDepartament)
+router.delete('/:id', validationParamId, DepartamentControllers.deleteDepartament)
 
 module.exports = router;

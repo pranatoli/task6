@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const db = require('../config/database');
 const Departament = require('./departament');
 
-const Position = db.define('positions', {
+const Position = db.define('position', {
     id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -21,7 +21,6 @@ const Position = db.define('positions', {
         type: Sequelize.STRING,
         allowNull: false,
     },
-
 },
     {
         timestamps: false,

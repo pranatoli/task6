@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const db = require('../config/database');
 const Adress = require('./adress');
 
-const Departament = db.define('departaments', {
+const Departament = db.define('departament', {
     id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -21,7 +21,6 @@ const Departament = db.define('departaments', {
             key: 'id',
         }
     },
-
 },
     {
         timestamps: false,

@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../config/database');
 
-const Adress = db.define('adresses', {
+const Adress = db.define('adress', {
     id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -23,10 +23,12 @@ const Adress = db.define('adresses', {
     building: {
         type: Sequelize.INTEGER,
         allowNull: true,
+        defaultValue: null,
     },
     appt: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
+        defaultValue: null,
     },
 },
     {

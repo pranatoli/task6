@@ -4,7 +4,7 @@ const Departament = require('./departament');
 const Position = require('./position');
 const Adress = require('./adress');
 
-const Worker = db.define('workers', {
+const Worker = db.define('worker', {
     id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -24,7 +24,7 @@ const Worker = db.define('workers', {
         allowNull: false,
     },
     male: {
-        type: Sequelize.STRING,
+        type: Sequelize.ENUM('man', 'woman'),
         allowNull: false,
     },
     positionId: {

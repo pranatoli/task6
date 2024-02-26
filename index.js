@@ -9,6 +9,18 @@ const db = require('./config/database');
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
+const Sentry = require('@sentry/node');
+
+Sentry.init(
+    {
+        dsn: process.env.DNS,
+        tracesSampleRate: 1.0
+    }
+);
+
+app.use(Sentry.Handlers.requestHandler());
+app.use(Sentry.Handlers.errorHandler());
+
 const swaggerOptioins = {
     definition: {
         openapi: "3.0.0",

@@ -1,9 +1,6 @@
-require('dotenv').config();
-
 const PositionServices = require('../services/position.services');
-
-const db = require('../config/database');
-const { Worker, Position, Adress, Departament } = require('../models/_models');
+const Sentry = require("@sentry/node");
+const { validationResult } = require('express-validator');
 
 
 class PositionControllers {
@@ -12,6 +9,7 @@ class PositionControllers {
             const positions = await PositionServices.getPositions();
             res.status(200).send(positions);
         } catch (err) {
+            Sentry.captureException(err);
             res.status(400).json({
                 err: err.message
             })
@@ -20,10 +18,20 @@ class PositionControllers {
 
     async getPositionByID(req, res) {
         try {
+            const result = validationResult(req);
+            if (result.isEmpty()) {
+
+            } else {
+                res.status(400);
+                res.send({
+                    errors: result.array()
+                })
+            }
             let positionID = req.params.id;
             const data = await PositionServices.getPositionByID(positionID);
             res.status(data.status).send(data.send);
         } catch (err) {
+            Sentry.captureException(err);
             res.status(400).json({
                 err: err.message
             })
@@ -32,10 +40,19 @@ class PositionControllers {
 
     async addPosition(req, res) {
         try {
-            let body = req.body;
-            const data = await PositionServices.addPosition(body);
-            res.status(200).send(data);
+            const result = validationResult(req);
+            if (result.isEmpty()) {
+                let body = req.body;
+                const data = await PositionServices.addPosition(body);
+                res.status(200).send(data);
+            } else {
+                res.status(400);
+                res.send({
+                    errors: result.array()
+                })
+            }
         } catch (err) {
+            Sentry.captureException(err);
             res.status(400).json({
                 err: err.message
             })
@@ -44,24 +61,42 @@ class PositionControllers {
 
     async updatePosition(req, res) {
         try {
-            let body = req.body
-            let positionID = req.params.id
-            const data = await PositionServices.updatePosition(body, positionID);
-            console.log(data);
-            res.status(200).send(data);
+            const result = validationResult(req);
+            if (result.isEmpty()) {
+                let body = req.body
+                let positionID = req.params.id
+                const data = await PositionServices.updatePosition(body, positionID);
+                console.log(data);
+                res.status(200).send(data);
+            } else {
+                res.status(400);
+                res.send({
+                    errors: result.array()
+                })
+            }
         } catch (err) {
+            Sentry.captureException(err);
             res.status(400).json({
                 err: err.message
             })
         }
-
     }
+
     async deletePosition(req, res) {
         try {
-            let positionID = req.params.id;
-            const data = await PositionServices.deletePosition(positionID);
-            res.status(200).send(data);
+            const result = validationResult(req);
+            if (result.isEmpty()) {
+                let positionID = req.params.id;
+                const data = await PositionServices.deletePosition(positionID);
+                res.status(200).send(data);
+            } else {
+                res.status(400);
+                res.send({
+                    errors: result.array()
+                })
+            }
         } catch (err) {
+            Sentry.captureException(err);
             res.status(400).json({
                 err: err.message
             })

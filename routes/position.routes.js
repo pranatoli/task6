@@ -1,8 +1,17 @@
 let express = require('express');
 const router = express.Router();
-const db = require('../config/database');
 const PositionControllers = require('../controllers/position.controllers');
-const { Worker, Position, Adress, Departament } = require('../models/_models');
+
+const { body, query, param, matchedData, validationResult } = require('express-validator');
+
+const validationBody = [
+    body('departamentId').notEmpty().isInt(),
+    body('title').notEmpty().isString().trim().escape(),
+]
+
+const validationParamId = [
+    param('id').notEmpty().isString().withMessage('ID not correct')
+]
 
 /**
  * @swagger
@@ -43,7 +52,7 @@ router.get('/', PositionControllers.getPositions)
  *          400:
  *            description: bad request 
  */
-router.get('/:id', PositionControllers.getPositionByID)
+router.get('/:id', validationParamId, PositionControllers.getPositionByID)
 
 /**
  *@swagger
@@ -79,7 +88,7 @@ router.get('/:id', PositionControllers.getPositionByID)
  *                  example: водитель
  *                  description: Position name
  */
-router.post('/', PositionControllers.addPosition)
+router.post('/', validationBody, PositionControllers.addPosition)
 
 /**
  *@swagger
@@ -102,7 +111,7 @@ router.post('/', PositionControllers.addPosition)
  *          400:
  *            description: bad request
  */
-router.patch('/:id', PositionControllers.updatePosition)
+router.patch('/:id', validationBody, validationParamId, PositionControllers.updatePosition)
 
 /**
  *@swagger
@@ -123,6 +132,6 @@ router.patch('/:id', PositionControllers.updatePosition)
  *          400:
  *            description: bad request
  */
-router.delete('/:id', PositionControllers.deletePosition)
+router.delete('/:id', validationParamId, PositionControllers.deletePosition)
 
 module.exports = router;

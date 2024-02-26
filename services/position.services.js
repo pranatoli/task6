@@ -6,15 +6,18 @@ class PositionServices {
     async getPositions() {
         return await Position.findAll();
     }
+
     async getPositionByID(positionID) {
-        const data = await Position.findOne({ where: { id: positionID } });
+        const data = await Position.findByPk(positionID);
         return data === null ? { status: 400, send: "должность не найдена" } : { status: 200, send: data };
     }
+
     async addPosition(body) {
         return await Position.create(body);
     }
+
     async updatePosition(body, positionID) {
-        const findPos = await Position.findOne({ where: { id: positionID } });
+        const findPos = await Position.findByPk(positionID);
         if (findPos === null) {
             return "должности с данным ID не сущетвует"
         }
@@ -25,13 +28,14 @@ class PositionServices {
         })
         return await Position.findOne({ where: { id: positionID } })
     }
+
     async deletePosition(positionID) {
         const data = await Position.destroy({
             where: {
                 id: positionID
             }
         })
-        return data == 1 ? "должность удалена" : "должности с данным ID не сущетвует"
+        return data == 1 ? "должность удалена из базы" : "должности с данным ID не сущетвует"
     }
 
 }
