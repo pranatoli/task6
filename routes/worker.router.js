@@ -8,7 +8,7 @@ const validationBody = [
     body('name').notEmpty().isString().trim().escape(),
     body('surname').notEmpty().isString().trim().escape(),
     body('middlename').notEmpty().isString().trim().escape(),
-    body('male').notEmpty().isString().isIn(['man', 'woman']).withMessage('Male must be man or woman only'),
+    body('male').notEmpty().isString().isIn(['woman', 'man']).withMessage('Male must be man or woman only'),
     body('positionId').notEmpty().isInt(),
     body('departamentId').notEmpty().isInt(),
     body('adressId').notEmpty().isInt(),
@@ -163,5 +163,97 @@ router.patch('/:id', validationBody, validationParamId, WorkerControllers.update
  *            description: bad request
  */
 router.delete('/:id', validationParamId, WorkerControllers.deleteWorker)
+
+/**
+ * @swagger
+ *  /api/worker/{id}/information:
+ *      get:
+ *        tags: 
+ *            - Worker
+ *        summary:
+ *            Получение всех данных работника по ID
+ *        description:
+ *            Получение всех данных работника по ID 
+ *        parameters:
+ *            - name: id
+ *              in: path
+ *              description: ID работника, данные которого нужно получить 
+ *              required: true
+ *        responses:
+ *          200: 
+ *            description: A successful response, get worker
+ *          400:
+ *            description: bad request 
+ */
+router.get('/:id/information', validationParamId, WorkerControllers.getWorkerInfoByID)
+
+/**
+ * @swagger
+ *  /api/worker/{id}/position:
+ *      get:
+ *        tags: 
+ *            - Worker
+ *        summary:
+ *            Получение должности работника по ID
+ *        description:
+ *            Получение должности работника по ID 
+ *        parameters:
+ *            - name: id
+ *              in: path
+ *              description: ID работника, должность которого нужно получить 
+ *              required: true
+ *        responses:
+ *          200: 
+ *            description: A successful response, get worker
+ *          400:
+ *            description: bad request 
+ */
+router.get('/:id/position', validationParamId, WorkerControllers.getWorkerPosition)
+
+/**
+ * @swagger
+ *  /api/worker/{id}/departament:
+ *      get:
+ *        tags: 
+ *            - Worker
+ *        summary:
+ *            Получение организации работника по ID
+ *        description:
+ *            Получение организации работника по ID 
+ *        parameters:
+ *            - name: id
+ *              in: path
+ *              description: ID работника, организацию которого нужно получить 
+ *              required: true
+ *        responses:
+ *          200: 
+ *            description: A successful response, get worker
+ *          400:
+ *            description: bad request 
+ */
+router.get('/:id/departament', validationParamId, WorkerControllers.getWorkerDepartament)
+
+/**
+ * @swagger
+ *  /api/worker/{id}/adress:
+ *      get:
+ *        tags: 
+ *            - Worker
+ *        summary:
+ *            Получение адреса работника по ID
+ *        description:
+ *            Получение адреса работника по ID 
+ *        parameters:
+ *            - name: id
+ *              in: path
+ *              description: ID работника, адрес которого нужно получить 
+ *              required: true
+ *        responses:
+ *          200: 
+ *            description: A successful response, get worker
+ *          400:
+ *            description: bad request 
+ */
+router.get('/:id/adress', validationParamId, WorkerControllers.getWorkerAdress)
 
 module.exports = router;

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js",
+    "dev": "nodemon server.js",
     "fake-data": "npx sequelize-cli db:seed:all"
   },
   "author": "Anatoli Prishchepov",

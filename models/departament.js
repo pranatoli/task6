@@ -9,7 +9,7 @@ const Departament = db.define('departament', {
         primaryKey: true,
         allowNull: false,
     },
-    name: {
+    depname: {
         type: Sequelize.STRING,
         allowNull: false,
     },

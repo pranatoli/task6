@@ -100,6 +100,90 @@ class WorkerControllers {
             })
         }
     }
+
+    async getWorkerInfoByID(req, res) {
+        try {
+            const result = validationResult(req);
+            if (result.isEmpty()) {
+                let workerID = req.params.id;
+                const data = await WorkerServices.getWorkerInfoByID(workerID);
+                res.status(data.status).send(data.send);
+            } else {
+                res.status(400);
+                res.send({
+                    errors: result.array()
+                })
+            }
+        } catch (err) {
+            Sentry.captureException(err)
+            res.status(400).json({
+                err: err.message
+            })
+        }
+    }
+
+    async getWorkerPosition(req, res) {
+        try {
+            const result = validationResult(req);
+            if (result.isEmpty()) {
+                let workerID = req.params.id;
+                const data = await WorkerServices.getWorkerPosition(workerID);
+                res.status(data.status).send(data.send);
+            } else {
+                res.status(400);
+                res.send({
+                    errors: result.array()
+                })
+            }
+        } catch (err) {
+            Sentry.captureException(err)
+            res.status(400).json({
+                err: err.message
+            })
+        }
+    }
+
+    async getWorkerDepartament(req, res) {
+        try {
+            const result = validationResult(req);
+            if (result.isEmpty()) {
+                let workerID = req.params.id;
+                const data = await WorkerServices.getWorkerDepartament(workerID);
+                res.status(data.status).send(data.send);
+            } else {
+                res.status(400);
+                res.send({
+                    errors: result.array()
+                })
+            }
+        } catch (err) {
+            Sentry.captureException(err)
+            res.status(400).json({
+                err: err.message
+            })
+        }
+    }
+
+    async getWorkerAdress(req, res) {
+        try {
+            const result = validationResult(req);
+            if (result.isEmpty()) {
+                let workerID = req.params.id;
+                const data = await WorkerServices.getWorkerAdress(workerID);
+                res.status(data.status).send(data.send);
+            } else {
+                res.status(400);
+                res.send({
+                    errors: result.array()
+                })
+            }
+        } catch (err) {
+            Sentry.captureException(err)
+            res.status(400).json({
+                err: err.message
+            })
+        }
+    }
 }
 
 module.exports = new WorkerControllers();
