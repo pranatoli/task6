@@ -20,16 +20,15 @@ class PositionControllers {
         try {
             const result = validationResult(req);
             if (result.isEmpty()) {
-
+                let positionID = req.params.id;
+                const data = await PositionServices.getPositionByID(positionID);
+                res.status(data.status).send(data.send);
             } else {
                 res.status(400);
                 res.send({
                     errors: result.array()
                 })
             }
-            let positionID = req.params.id;
-            const data = await PositionServices.getPositionByID(positionID);
-            res.status(data.status).send(data.send);
         } catch (err) {
             Sentry.captureException(err);
             res.status(400).json({
@@ -102,6 +101,49 @@ class PositionControllers {
             })
         }
     }
+
+    async getPositionWorkers(req, res) {
+        try {
+            const result = validationResult(req);
+            if (result.isEmpty()) {
+                let positionID = req.params.id;
+                const data = await PositionServices.getPositionWorkers(positionID);
+                res.status(data.status).send(data.send);
+            } else {
+                res.status(400);
+                res.send({
+                    errors: result.array()
+                })
+            }
+        } catch (err) {
+            Sentry.captureException(err);
+            res.status(400).json({
+                err: err.message
+            })
+        }
+    }
+
+    async getPositionDepartaments(req, res) {
+        try {
+            const result = validationResult(req);
+            if (result.isEmpty()) {
+                let positionID = req.params.id;
+                const data = await PositionServices.getPositionDepartaments(positionID);
+                res.status(data.status).send(data.send);
+            } else {
+                res.status(400);
+                res.send({
+                    errors: result.array()
+                })
+            }
+        } catch (err) {
+            Sentry.captureException(err);
+            res.status(400).json({
+                err: err.message
+            })
+        }
+    }
+
 }
 
 module.exports = new PositionControllers();

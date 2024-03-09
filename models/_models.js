@@ -2,6 +2,7 @@ const Worker = require('./worker');
 const Position = require('./position');
 const Adress = require('./adress');
 const Departament = require('./departament');
+const DepPositions = require('./depPositions');
 
 // (async () => {
 //     try {
@@ -28,6 +29,12 @@ const Departament = require('./departament');
 //     } catch (error) {
 //         console.error(error)
 //     }
+//     try {
+//         await DepPositions.sync({ force: true })
+//         console.log('---------> DepPositions model created <---------')
+//     } catch (error) {
+//         console.error(error)
+//     }
 // })()
 
 // ------- Associations -------
@@ -41,8 +48,8 @@ Worker.belongsTo(Departament);
 Adress.hasOne(Departament);
 Departament.belongsTo(Adress);
 
-Departament.belongsToMany(Position, { through: 'DepPositions' });
-Position.belongsToMany(Departament, { through: 'DepPositions' });
+Departament.belongsToMany(Position, { through: DepPositions });
+Position.belongsToMany(Departament, { through: DepPositions });
 
 Adress.hasOne(Worker);
 Worker.belongsTo(Adress);
@@ -52,4 +59,5 @@ module.exports = {
     Adress,
     Departament,
     Worker,
+    DepPositions
 }

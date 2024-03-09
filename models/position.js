@@ -9,14 +9,14 @@ const Position = db.define('position', {
         primaryKey: true,
         allowNull: false,
     },
-    departamentId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-            model: Departament,
-            key: 'id',
-        }
-    },
+    // departamentId: {
+    //     type: Sequelize.INTEGER,
+    //     allowNull: false,
+    //     references: {
+    //         model: Departament,
+    //         key: 'id',
+    //     }
+    // },
     title: {
         type: Sequelize.STRING,
         allowNull: false,

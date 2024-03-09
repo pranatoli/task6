@@ -1,5 +1,5 @@
 const db = require('../config/database');
-const { Worker, Position, Adress, Departament } = require('../models/_models');
+const { Worker, Position, Adress, Departament, DepPositions } = require('../models/_models');
 
 
 class PositionServices {
@@ -38,6 +38,33 @@ class PositionServices {
         return data == 1 ? "должность удалена из базы" : "должности с данным ID не сущетвует"
     }
 
+    async getPositionWorkers(positionID) {
+        const exam = await Position.findByPk(positionID);
+        const data = await Worker.findAll({
+            include: {
+                model: Position,
+                where: {
+                    id: positionID,
+                }
+            }
+        });
+        return exam === null ? { status: 400, send: "должность не найдена" } : { status: 200, send: data };
+    }
+
+    async getPositionDepartaments(positionID) {
+        const exam = await Position.findByPk(positionID);
+        const data = await Position.findAll({
+            attributes: ["title"],
+            include: {
+                model: Departament,
+                through: {
+                    attributes: [],
+                }
+            },
+            where: { id: positionID },
+        });
+        return exam === null ? { status: 400, send: "должность не найдена" } : { status: 200, send: data };
+    }
 }
 
 module.exports = new PositionServices();

@@ -79,12 +79,34 @@ class DepartamentControllers {
             })
         }
     }
+
     async deleteDepartament(req, res) {
         try {
             const result = validationResult(req);
             if (result.isEmpty()) {
                 let departamentID = req.params.id;
                 const data = await DepartamentServices.deleteDepartament(departamentID);
+                res.status(data.status).send(data.send);
+            } else {
+                res.status(400);
+                res.send({
+                    errors: result.array()
+                })
+            }
+        } catch (err) {
+            Sentry.captureException(err);
+            res.status(400).json({
+                err: err.message
+            })
+        }
+    }
+
+    async getDepartamentPositions(req, res) {
+        try {
+            const result = validationResult(req);
+            if (result.isEmpty()) {
+                let departamentID = req.params.id;
+                const data = await DepartamentServices.getDepartamentPositions(departamentID);
                 res.status(data.status).send(data.send);
             } else {
                 res.status(400);

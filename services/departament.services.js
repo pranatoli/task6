@@ -38,6 +38,20 @@ class DepartamentServices {
         return data == 1 ? { status: 200, send: "организация удалена из базы" } : { status: 400, send: "организации с данным ID не сущетвует" };
     }
 
+    async getDepartamentPositions(departamentID) {
+        const exam = await Departament.findByPk(departamentID);
+        const data = await Departament.findAll({
+            attributes: ["depname"],
+            include: {
+                model: Position,
+                through: {
+                    attributes: [],
+                }
+            },
+            where: { id: departamentID },
+        });
+        return exam === null ? { status: 400, send: "органиазация не найдена" } : { status: 200, send: data };
+    }
 }
 
 module.exports = new DepartamentServices();

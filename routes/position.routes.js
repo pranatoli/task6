@@ -5,7 +5,6 @@ const PositionControllers = require('../controllers/position.controllers');
 const { body, query, param, matchedData, validationResult } = require('express-validator');
 
 const validationBody = [
-    body('departamentId').notEmpty().isInt(),
     body('title').notEmpty().isString().trim().escape(),
 ]
 
@@ -72,17 +71,13 @@ router.get('/:id', validationParamId, PositionControllers.getPositionByID)
  * components:
  *    requestBodies:
  *      Position:
- *        description: Пример тела запроса, указываем ID ораганизации к которой относится должность и ее название
+ *        description: Пример тела запроса, указываем название должности
  *        required: true
  *        content:
  *          application/json:
  *            schema:
  *              type: object
  *              properties:
- *                departamentId:
- *                  type: integer
- *                  example: 3
- *                  description: departament Id
  *                title:
  *                  type: string
  *                  example: водитель
@@ -133,5 +128,51 @@ router.patch('/:id', validationBody, validationParamId, PositionControllers.upda
  *            description: bad request
  */
 router.delete('/:id', validationParamId, PositionControllers.deletePosition)
+
+/**
+ * @swagger
+ *  /api/position/{id}/workers:
+ *      get:
+ *        tags: 
+ *            - Position
+ *        summary:
+ *            Получение работников на должности по ID
+ *        description:
+ *            Получение работников на должности по ID 
+ *        parameters:
+ *            - name: id
+ *              in: path
+ *              description: ID должности работников которой нужно получить 
+ *              required: true
+ *        responses:
+ *          200: 
+ *            description: A successful response, get position
+ *          400:
+ *            description: bad request 
+ */
+router.get('/:id/workers', validationParamId, PositionControllers.getPositionWorkers)
+
+/**
+ * @swagger
+ *  /api/position/{id}/departaments:
+ *      get:
+ *        tags: 
+ *            - Position
+ *        summary:
+ *            Получение организаций в которых есть данная должность по ID
+ *        description:
+ *            Получение организаций в которых есть данная должность по ID 
+ *        parameters:
+ *            - name: id
+ *              in: path
+ *              description: ID должности, которую необходимо найти в ораганизациях 
+ *              required: true
+ *        responses:
+ *          200: 
+ *            description: A successful response, get position
+ *          400:
+ *            description: bad request 
+ */
+router.get('/:id/departaments', validationParamId, PositionControllers.getPositionDepartaments)
 
 module.exports = router;

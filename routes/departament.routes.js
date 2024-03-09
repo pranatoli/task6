@@ -5,7 +5,7 @@ const DepartamentControllers = require('../controllers/departament.controllers')
 const { body, query, param, matchedData, validationResult } = require('express-validator');
 
 const validationBody = [
-    body('name').notEmpty().isString().trim().escape(),
+    body('depname').notEmpty().isString().trim().escape(),
     body('adressId').notEmpty().isInt(),
 ]
 
@@ -83,7 +83,7 @@ router.get('/:id', validationParamId, DepartamentControllers.getDepartamentByID)
  *                  type: integer
  *                  example: 3
  *                  description: adress Id
- *                name:
+ *                depname:
  *                  type: string
  *                  example: отделение №5
  *                  description: Departament name
@@ -133,5 +133,28 @@ router.patch('/:id', validationBody, validationParamId, DepartamentControllers.u
  *            description: bad request
  */
 router.delete('/:id', validationParamId, DepartamentControllers.deleteDepartament)
+
+/**
+ * @swagger
+ *  /api/departament/{id}/positions:
+ *      get:
+ *        tags: 
+ *            - Departament
+ *        summary:
+ *            Получение дожностей в организации
+ *        description:
+ *            Получение дожностей в организации 
+ *        parameters:
+ *            - name: id
+ *              in: path
+ *              description: ID организации, должности которой необходимо получить 
+ *              required: true
+ *        responses:
+ *          200: 
+ *            description: A successful response
+ *          400:
+ *            description: bad request 
+ */
+router.get('/:id/positions', validationParamId, DepartamentControllers.getDepartamentPositions)
 
 module.exports = router;
