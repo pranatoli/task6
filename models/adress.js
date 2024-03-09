@@ -23,7 +23,7 @@ const Adress = db.define('adress', {
     building: {
         type: Sequelize.INTEGER,
         allowNull: true,
-        defaultValue: null,
+        defaultValue: 0,
     },
     appt: {
         type: Sequelize.INTEGER,

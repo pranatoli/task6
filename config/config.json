@@ -1,23 +1,23 @@
 {
   "development": {
-    "username": "postgres",
-    "password": "qwerty",
-    "database": "usersdb",
-    "host": "localhost",
+    "username": "yfjtsvwa",
+    "password": "HiCUjqK7om8J1DEvsyw01QYKo7Vm-0li",
+    "database": "yfjtsvwa",
+    "host": "dumbo.db.elephantsql.com",
     "dialect": "postgres"
   },
   "test": {
-    "username": "postgres",
-    "password": "qwerty",
-    "database": "usersdb",
-    "host": "localhost",
+    "username": "yfjtsvwa",
+    "password": "HiCUjqK7om8J1DEvsyw01QYKo7Vm-0li",
+    "database": "yfjtsvwa",
+    "host": "dumbo.db.elephantsql.com",
     "dialect": "postgres"
   },
   "production": {
-    "username": "postgres",
-    "password": "qwerty",
-    "database": "usersdb",
-    "host": "localhost",
+    "username": "yfjtsvwa",
+    "password": "HiCUjqK7om8J1DEvsyw01QYKo7Vm-0li",
+    "database": "yfjtsvwa",
+    "host": "dumbo.db.elephantsql.com",
     "dialect": "postgres"
   }
 }

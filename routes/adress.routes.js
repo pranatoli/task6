@@ -8,7 +8,7 @@ const validationBody = [
     body('city').notEmpty().isString().trim().escape(),
     body('street').notEmpty().isString().trim().escape(),
     body('house').notEmpty().isInt(),
-    body('building').notEmpty().isInt(),
+    body('building').notEmpty(),
     body('appt').notEmpty().isInt(),
 ]
 
@@ -96,7 +96,7 @@ router.get('/:id', validationParamId, AdressControllers.getAdressByID)
  *                  description: номер дома
  *                building:
  *                  type: integer
- *                  example: null
+ *                  example: 0
  *                  description: корпус дома, если есть, по умолчанию null
  *                appt:
  *                  type: integer
